@@ -1,0 +1,10 @@
+---
+serviceName: pegacorn-fhirplace
+servicePort: 15823
+imageTag: 1.0 #latest
+storageReleaseName: site-a-fhirplace-storage
+
+#\helm\helm upgrade pegacorn-fhirplace-site-a --install --namespace site-a --set serviceName=pegacorn-fhirplace,storageReleaseName=site-a-fhirplace-storage,servicePort=15823,imageTag=1.0 helm-postgres
+
+
+
