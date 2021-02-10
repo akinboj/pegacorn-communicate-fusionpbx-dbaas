@@ -79,14 +79,14 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: {{ .Values.dockerRepo }}pegacorn-fhirplace-postgres:{{ .Values.imageTag }}
+        image: {{ .Values.dockerRepo }}pegacorn/pegacorn-postgres:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
 #        livenessProbe:
 #          httpGet:
 #            path: /health
 #            port: 9990
 #            scheme: HTTP
-#          initialDelaySeconds: 90
+#          initialDelaySeconds: 30
         name: postgres
         ports:
         - containerPort: 5432
@@ -97,7 +97,7 @@ spec:
 #            path: /health
 #            port: 9990
 #            scheme: HTTP
-#          initialDelaySeconds: 90
+#          initialDelaySeconds: 10
         securityContext:
           privileged: false
         volumeMounts:

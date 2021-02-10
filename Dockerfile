@@ -1,8 +1,10 @@
+#FROM fhirfactory/pegacorn-base-docker-postgres:1.0.0
 FROM postgres:12.4-alpine
 LABEL "Product"="PostgreSQL alpine (SSL enabled)"
 
 COPY postgresql.conf /var/lib/postgresql/config/postgresql.conf
 COPY pg_hba.conf /var/lib/postgresql/config/pg_hba.conf
+COPY init.sql /docker-entrypoint-initdb.d/
 
 COPY docker-entrypoint.sh /usr/local/bin/
 

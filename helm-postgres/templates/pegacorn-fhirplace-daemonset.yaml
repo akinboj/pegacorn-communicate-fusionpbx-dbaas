@@ -56,6 +56,11 @@ spec:
           value: {{ .Values.dbUser }}
         - name: POSTGRES_DB
           value: {{ .Values.dbName }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: {{ .Values.serviceName }}-secrets
+            key: keyPassword
         - name: KUBERNETES_SERVICE_NAME
           value: {{ .Values.serviceName }}
         - name: MY_NODE_NAME
@@ -82,7 +87,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: {{ .Values.dockerRepo }}pegacorn-fhirplace-postgres:{{ .Values.imageTag }}
+        image: {{ .Values.dockerRepo }}pegacorn/pegacorn-postgres:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
 #        livenessProbe:
 #          httpGet:

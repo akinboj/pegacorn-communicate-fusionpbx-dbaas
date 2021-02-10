@@ -1,8 +1,8 @@
 ---
-serviceName: pegacorn-fhirplace
+serviceName: pegacorn-fusionpbx
 servicePort: 15823
 imageTag: 1.0 #latest
-storageReleaseName: site-a-fhirplace-storage
+storageReleaseName: site-a-fusionpbx-storage
 
 #\helm\helm upgrade pegacorn-fhirplace-site-a --install --namespace site-a --set serviceName=pegacorn-fhirplace,storageReleaseName=site-a-fhirplace-storage,servicePort=15823,imageTag=1.0 helm-postgres
 
