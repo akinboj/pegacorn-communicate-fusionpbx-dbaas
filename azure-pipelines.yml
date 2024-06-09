@@ -1,0 +1,61 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  myNameSpace: 'site-a'
+  myDockerRepo: 'aethercontainerregistry.azurecr.io'
+  projectVersion: '1.0.0-snapshot'
+  myDockerImageName: '$(myDockerRepo)/pegacorn/pegacorn-postgres'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@0
+  displayName: 'Build a docker image'
+  inputs:
+    azureSubscription: 'AETHER-DEV-ENV'
+    azureContainerRegistry: '{"loginServer":"aethercontainerregistry.azurecr.io", "id" : "/subscriptions/e05997eb-87d7-4119-a998-2729b9f85e46/resourceGroups/AETHER-DEVENV/providers/Microsoft.ContainerRegistry/registries/AetherContainerRegistry"}'
+    dockerFile: Dockerfile
+    imageName: '$(myDockerImageName):$(projectVersion)'
+- task: Docker@0
+  displayName: 'Push a docker image'
+  inputs:
+    azureSubscription: 'AETHER-DEV-ENV'
+    azureContainerRegistry: '{"loginServer":"aethercontainerregistry.azurecr.io", "id" : "/subscriptions/e05997eb-87d7-4119-a998-2729b9f85e46/resourceGroups/AETHER-DEVENV/providers/Microsoft.ContainerRegistry/registries/AetherContainerRegistry"}'
+    action: 'Push an image'
+    imageName: '$(myDockerImageName):$(projectVersion)'
+#- task: HelmInstaller@1
+#  displayName: 'Install Helm 3.1.1'
+#  inputs: 
+#    helmVersionToInstall: 3.1.1
+#- script: |
+#    echo Checking connectivity to devapp341vs ...
+#    nslookup devapp341vs
+#    nslookup devapp341vs.dev.act.gov.au
+#    ping -c 3 172.30.76.13
+#    ping -c 3 devapp341vs
+#    ping -c 3 devapp341vs.dev.act.gov.au
+#    curl --insecure https://172.30.76.13:6443
+#    curl --insecure https://devapp341vs:6443
+#    curl --insecure https://devapp341vs.dev.act.gov.au:6443
+#- task: HelmDeploy@0
+#  displayName: 'helm upgrade $(Build.Repository.Name)-$(myNameSpace)'
+#  inputs:
+#    connectionType: 'Kubernetes Service Connection'
+#    kubernetesServiceConnection: 'Site-a Kubernetes DEV cluster-site-a-1584657593220'
+#    namespace: '$(myNameSpace)'
+#    command: upgrade
+#    chartType: FilePath
+#    chartPath: helm-postgres
+#    releaseName: '$(Build.Repository.Name)-$(myNameSpace)'
+#    overrideValues: 'serviceName=$(Build.Repository.Name),storageReleaseName=$(myNameSpace)-fhirplace-storage,servicePort=30823,imageTag=$(projectVersion),dockerRepo=$(myDockerRepo),acrSecretName=acr-secret-$(myNameSpace)'
+#    valueFile: helm-postgres/values.yaml
+#    arguments: '--client-only'

@@ -1,0 +1,7 @@
+---
+name: pegacorn-fhirplace
+sources:
+- https://actgovernment@dev.azure.com/ACTGovernment/Pegacorn/_git/pegacorn-fhirplace
+version: 1.0.0-SNAPSHOT
+description: Postgres DB for HAPI FHIR JPA Server to persist to
+#icon: img/icons/camel.svg
